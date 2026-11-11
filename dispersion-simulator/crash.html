@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Crash-fault Dispersion Simulator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="mode-crash">
+
+<nav id="modebar">
+  <span class="ttl">Optimal Fault-Tolerant Dispersion on Oriented Grids (ICDCN 2025)</span>
+  <div class="btns">
+    <a href="crash.html" class="modelink" aria-current="page">1 · Crash-fault robots</a>
+    <a href="byzantine.html" class="modelink byzbtn">2 · Weak Byzantine robots</a>
+  </div>
+  <span class="hint">Two separate simulators. Each run uses one fault type.</span>
+</nav>
+
+<main id="stage" class="mode-crash">
+<header>
+  <h1>Optimal Fault-Tolerant Dispersion on Oriented Grids — Crash-Fault Algorithm Simulator</h1>
+  <p>Faithful, round-by-round simulation of <i>Algorithm 1: Oriented Grid Dispersion with Faulty Robots</i> (Banerjee, Kumar, Molla — ICDCN 2025). Every animation step is one step of the algorithm.</p>
+</header>
+
+<div id="app">
+  <!-- LEFT: setup -->
+  <aside id="left">
+    <div class="card">
+      <h2>1 · Grid &amp; robots</h2>
+      <div class="grid2">
+        <div><label>Grid side √n</label><select id="selS"></select></div>
+        <div><label>Robots k (≤ n)</label><input type="number" id="inK" min="1"></div>
+      </div>
+      <button id="btnReseed" class="w100 mt10" title="Re-roll the random placement (planned crashes are cleared)">🎲 Generate new random scenario</button>
+      <p class="small">IDs are 1…k. With k = n you get the paper's main setting; Remark 1 of the paper says any k ≤ n also works.</p>
+    </div>
+
+    <div class="card mt12">
+      <h2>2 · Crash a robot</h2>
+      <label>Add a crash</label>
+      <div class="grid2">
+        <input type="number" id="cId" placeholder="robot ID" min="1">
+        <input type="number" id="cRound" placeholder="at round" min="1">
+      </div>
+      <div class="row mt6"><button id="btnAddCrash">+ Add crash</button><button id="btnClearCrash" class="danger">Clear all</button></div>
+      <div id="crashList" class="mt6"></div>
+      <p class="small">A crash happens at the <b>start</b> of the chosen round (before Communicate). The robot vanishes, its memory is lost, and no other robot can see it. Tip: click any robot on the grid, then press “Crash it next round”.</p>
+    </div>
+
+    <div class="card mt12">
+      <h2>3 · Display</h2>
+      <label class="chk"><input type="checkbox" id="oPorts" checked> Port numbers (orange)</label>
+      <label class="chk"><input type="checkbox" id="oCoords" checked> Coordinates (row, col)</label>
+      <label class="chk"><input type="checkbox" id="oQuad" checked> Quadrants / centre guide</label>
+      <label class="chk"><input type="checkbox" id="oArrows" checked> Movement arrows &amp; hot edges</label>
+      <button id="btnDownload" class="mt6 w100">⬇ Download full round log (JSON)</button>
+    </div>
+  </aside>
+
+  <!-- CENTER: grid -->
+  <main id="center">
+    <div class="card" id="gridwrap">
+      <div id="svgbox"></div>
+      <div id="timeline"></div>
+      <div id="playbar">
+        <button id="bReset" title="Reset (Home)">⏮</button>
+        <button id="bPrev" title="Previous round (←)">◀</button>
+        <button id="bPlay" class="primary" title="Play / Pause (Space)">▶ Play</button>
+        <button id="bNext" title="Next round (→)">▶|</button>
+        <button id="bEnd" title="Jump to end (End)">⏭</button>
+        <span id="roundlabel">Round 0</span>
+        <input type="range" id="scrub" min="0" max="0" value="0">
+        <div id="speedbox">Speed <input type="range" id="speed" min="-2" max="3" step="0.25" value="0"><span id="speedlab">1×</span></div>
+      </div>
+      <div id="legend">
+        <span><i class="dot dot-node"></i> mesh node (corner = black ring)</span>
+        <span><i class="dot dot-robot"></i> robot (number = ID)</span>
+        <span><i class="dot dot-settled"></i> settled &amp; terminated</span>
+        <span><b class="c-red">✖</b> crashed robot</span>
+        <span><b class="c-amber">1 2 3 4</b> port numbers</span>
+      </div>
+      <div id="selpanel">Click a robot or a node on the grid to inspect it.</div>
+    </div>
+  </main>
+
+  <!-- RIGHT: tabs -->
+  <section id="right">
+    <div class="card">
+      <div class="tabs" id="tabs">
+        <div class="tab on" data-p="pExplain">📖 Explain round</div>
+        <div class="tab" data-p="pRobots">🤖 Robots</div>
+        <div class="tab" data-p="pRounds">🕒 Round log</div>
+        <div class="tab" data-p="pCx">📈 Complexity</div>
+        <div class="tab" data-p="pRes">🏁 Results</div>
+        <div class="tab" data-p="pAbout">📘 Model &amp; notes</div>
+      </div>
+      <div class="pane on" id="pExplain"></div>
+      <div class="pane" id="pRobots"></div>
+      <div class="pane" id="pRounds"></div>
+      <div class="pane" id="pCx"></div>
+      <div class="pane" id="pRes"></div>
+      <div class="pane" id="pAbout"></div>
+    </div>
+  </section>
+</div>
+</main>
+
+<script src="js/crash/engine.js"></script>
+<script src="js/crash/ui.js"></script>
+<script src="js/crash/main.js"></script>
+</body>
+</html>

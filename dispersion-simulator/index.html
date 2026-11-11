@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Oriented Grid Dispersion Simulator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="home">
+  <h1>Optimal Fault-Tolerant Dispersion on Oriented Grids</h1>
+  <p class="sub">Round-by-round simulators for the ICDCN 2025 paper by Banerjee, Kumar and Molla. Choose one fault model. The two are never mixed.</p>
+  <div class="choices">
+    <a class="choice crash" href="crash.html">
+      <h2>1 · Crash-fault robots</h2>
+      <p>A robot may stop at any round and disappear. Algorithm 1, Theorem 4.1: O(&radic;n) rounds, O(log n) bits.</p>
+    </a>
+    <a class="choice byz" href="byzantine.html">
+      <h2>2 · Weak Byzantine robots</h2>
+      <p>A robot may behave arbitrarily but cannot fake its ID. Theorem 4.2: O(&radic;n) rounds, O(n log n) bits.</p>
+    </a>
+  </div>
+</main>
+</body>
+</html>
